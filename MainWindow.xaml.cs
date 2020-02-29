@@ -55,7 +55,7 @@ namespace WpfApplication1
                     }
                     catch
                     {
-                        MessageBox.Show("Введите только целочисленные значения");
+                        MessageBox.Show("Введите только целочисленные значения и не оставляйте поля пустыми");
                         break;
                     }
                 }

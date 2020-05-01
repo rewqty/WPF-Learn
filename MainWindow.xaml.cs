@@ -25,30 +25,26 @@ namespace WpfApplication1
             InitializeComponent();
         }
 
-        private int distens = 25;
-        private int top = 90;
         private int result = 0;
-        private void btnPlus_Click(object sender, RoutedEventArgs e)
+        private void BtnPlus_Click(object sender, RoutedEventArgs e)
         {
-            
-            TextBox textInput = new TextBox();
-            textInput.HorizontalAlignment = HorizontalAlignment.Left;
-            textInput.VerticalAlignment = VerticalAlignment.Top;
-            textInput.Height = 25;
-            textInput.Width = 150;
-            textInput.FontSize = 16;
-            textInput.Margin = new Thickness(195, top, 0, 0);
-            top += distens;
-            gMain.Children.Add(textInput);
+
+            TextBox textInput = new TextBox()
+            {
+                Height = 25,
+                Width = 150,
+                FontSize = 16,
+            };
+            textInput.TextChanged += TextInput_TextChanged;
+            spMain.Children.Add(textInput);
         }
 
-        private void btnResult_Click(object sender, RoutedEventArgs e)
+        private void TextInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            foreach (var item in gMain.Children)
+            foreach (var item in spMain.Children)
             {
-                if (item is TextBox) 
+                if (item is TextBox num)
                 {
-                    TextBox num = (TextBox)item;
                     try
                     {
                         result += int.Parse(num.Text);
@@ -68,12 +64,10 @@ namespace WpfApplication1
             result = 0;
         }
 
-        private void btnExample_KeyDown(object sender, KeyEventArgs e)
+        private void BtnExample_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
                 MessageBox.Show("Хочешь закрыть меня? :<");
         }
-        
-
     }
 }

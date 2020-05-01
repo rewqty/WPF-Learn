@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="606.915" Width="525">
     <Grid x:Name="gMain">
-        <Button x:Name="btnPlus" Content="+" HorizontalAlignment="Left" Margin="439,41,0,0" VerticalAlignment="Top" Width="50" Height="50" Click="btnPlus_Click"/>
-        <Label x:Name="lblText" Content="Результат = " HorizontalAlignment="Left" Margin="112,50,0,0" VerticalAlignment="Top" Width="95" FontSize="16"/>
-        <Label x:Name="lblResult" Content="0" HorizontalAlignment="Left" Margin="203,50,0,0" VerticalAlignment="Top" Width="217" FontSize="16"/>
-        <Button x:Name="btnResult" Content="Сложить" FontSize="16" HorizontalAlignment="Left" Margin="21,41,0,0" VerticalAlignment="Top" Width="69" Click="btnResult_Click" Height="50"/>
-
+        <Label x:Name="lblText" Content="Результат = " VerticalAlignment="top" HorizontalAlignment="Left" FontSize="16"/>
+        <Label x:Name="lblResult" Content="0" VerticalAlignment="top" HorizontalAlignment="Center" FontSize="16"/>
+        <Button x:Name="btnPlus" Content="+" Click="BtnPlus_Click" MinHeight="50" MinWidth="50" VerticalAlignment="top" HorizontalAlignment="Right"/>
+        <StackPanel x:Name="spMain" Margin="0,55,0,0">
+        </StackPanel>
     </Grid>
 </Window>

@@ -25,41 +25,90 @@ namespace WpfApplication1
             InitializeComponent();
         }
 
-        private int result = 0;
+        private double result = 0;
+        public Dictionary<TextBox, ComboBox> Pair = new Dictionary<TextBox, ComboBox>();
         private void BtnPlus_Click(object sender, RoutedEventArgs e)
         {
-
             TextBox textInput = new TextBox()
             {
                 Height = 25,
                 Width = 150,
                 FontSize = 16,
             };
+            ComboBox operations = MakeComboBox(new string[] { "+", "-", "*", "/" });
+
+            StackPanel stTextOper = new StackPanel()
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Orientation = Orientation.Horizontal
+            };        
+
+            Pair.Add(textInput, operations);
             textInput.TextChanged += TextInput_TextChanged;
-            spMain.Children.Add(textInput);
+            operations.SelectionChanged += SelectCombox_Changed;
+            stTextOper.Children.Add(operations);
+            stTextOper.Children.Add(textInput);
+            spMain.Children.Add(stTextOper);
+            textInput.Focus();
         }
 
         private void TextInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            foreach (var item in spMain.Children)
+            foreach (var stack in spMain.Children)
             {
-                if (item is TextBox num)
+                if(stack is StackPanel st)
                 {
-                    try
+                    foreach (var item in st.Children)
                     {
-                        result += int.Parse(num.Text);
-                    }
-                    catch
-                    {
-                        if (num.Text == "") { }
-                        else
+                        if (item is TextBox num)
                         {
-                            MessageBox.Show("Введите только целочисленные значения");
-                            break;
+                            try
+                            {
+                                result = Count(result, double.Parse(num.Text), Pair[num].Text);
+                            }
+                            catch
+                            {
+                                if (num.Text == "") { }
+                                else
+                                {
+                                    MessageBox.Show("Вводите только числа");
+                                    break;
+                                }
+                            }
                         }
+                        lblResult.Content = result.ToString();
+                    }                    
+                }
+            }
+            result = 0;
+        }
+        private void SelectCombox_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var stack in spMain.Children)
+            {
+                if (stack is StackPanel st)
+                {
+                    foreach (var item in st.Children)
+                    {
+                        if (item is TextBox num)
+                        {
+                            try
+                            {
+                                result = Count(result, double.Parse(num.Text), Pair[num].Text);
+                            }
+                            catch
+                            {
+                                if (num.Text == "") { }
+                                else
+                                {
+                                    MessageBox.Show("Вводите только числа");
+                                    break;
+                                }
+                            }
+                        }
+                        lblResult.Content = result.ToString();
                     }
                 }
-                lblResult.Content = result.ToString();
             }
             result = 0;
         }
@@ -68,6 +117,38 @@ namespace WpfApplication1
         {
             if (e.Key == Key.Escape)
                 MessageBox.Show("Хочешь закрыть меня? :<");
+        }
+        private double Count(double result, double a, string op)
+        {
+            switch (op)
+            {
+                case "+":
+                    result += a;
+                    break;
+                case "-":
+                    result -= a;
+                    break;
+                case "*":
+                    result *= a;
+                    break;
+                case "/":
+                    result /= a;
+                    break;
+            }
+            return result;
+        }
+        private ComboBox MakeComboBox(string[] arr)
+        {
+            ComboBox box = new ComboBox();
+            foreach (string item in arr)
+            {
+                ComboBoxItem cbItem = new ComboBoxItem
+                {
+                    Content = item
+                };
+                box.Items.Add(cbItem);
+            }
+            return box;
         }
     }
 }
